@@ -11,7 +11,7 @@ from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import img_to_array
 from keras.utils import to_categorical
-from pyimagesearch.lenet import LeNet
+from lenet import LeNet
 from imutils import paths
 import matplotlib.pyplot as plt
 import numpy as np
@@ -128,8 +128,8 @@ plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
 
 # Plot the coordinartes on a graph
-plt.savefig(args["epochs"])
+plt.savefig(args["epochs"] + "epochs.png")
 
 # Move generated image to the graphs folder
 file_path = os.path.join(os.getcwd(), str(args["epochs"]) + "epochs.png")
-os.rename(file_path, os.getcwd() + "/graphs/" + str(args["epochs"]) + "epochs.png")
+os.rename(file_path, os.getcwd() + "\graphs\\" + str(args["epochs"]) + "epochs.png")
