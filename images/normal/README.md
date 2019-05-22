@@ -1,0 +1,1 @@
+# This directory should contain all Retinal OCT scans with normal, healthy retinas.
