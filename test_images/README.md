@@ -1,0 +1,1 @@
+# This directory contains the images we want to test against the model to get predictions

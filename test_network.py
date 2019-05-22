@@ -1,5 +1,5 @@
 # USAGE
-# python test_network.py --model dme.model --image examples/1.tiff
+# python test_network.py --model dme.model --image test_images/1.tiff
 
 # import the necessary packages
 from keras.preprocessing.image import img_to_array
