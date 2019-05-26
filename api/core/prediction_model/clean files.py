@@ -4,6 +4,7 @@ import os
 
 directories = []
 
+
 def fetch_directories(root):
     for root, dirs, files in os.walk(root):
         for d in dirs:
@@ -11,6 +12,7 @@ def fetch_directories(root):
             directories.append(os.path.join(root, d))
             pass
         pass
+
 
 print("fetching directories")
 fetch_directories("images")
