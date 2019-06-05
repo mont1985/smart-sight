@@ -76,6 +76,9 @@ class Hospital(models.Model):
         related_name='practitioners',
         limit_choices_to={'title': 'DOCTOR'})
 
+    def __str__(self):
+        return self.name
+
 
 class Patient(models.Model):
     name = models.CharField(max_length=100)
@@ -98,6 +101,9 @@ class Patient(models.Model):
         on_delete=models.PROTECT,
         related_name='hospitals',)
 
+    def __str__(self):
+        return self.name
+
 
 class PatientDiagnoses(models.Model):
     patient = models.ForeignKey(
@@ -105,6 +111,9 @@ class PatientDiagnoses(models.Model):
         on_delete=models.PROTECT,
         related_name='appointments')
     image = models.ImageField(upload_to='eye_photos/')
-    model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7)
-    is_true = models.BooleanField()
-    doctors_comment = models.CharField(max_length=255)
+    model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True)
+    is_true = models.BooleanField(default=False)
+    doctors_comment = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return "{}'s profile".format(self.patient)
