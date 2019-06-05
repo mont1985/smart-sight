@@ -38,7 +38,7 @@ DIAGNOSIS = (
 class User(AbstractUser):
     username = models.CharField(blank=True, null=True, max_length=255)
     email = models.EmailField(_('email address'), unique=True)
-    title = models.CharField(choices=ROLES, max_length=6)
+    title = models.CharField(choices=ROLES, max_length=9)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'title']
