@@ -5,7 +5,8 @@ from django.conf import settings
 
 ROLES = (
     ('ADMIN', 'Admin'),
-    ('DOCTOR', 'Doctor')
+    ('DOCTOR', 'Doctor'),
+    ('SUPERUSER', 'SuperUSer')
 )
 
 LEVELS = (
