@@ -6,7 +6,7 @@ from .models import User, UserProfile
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
-        fields = ('title', 'country', 'city', 'address', 'postal_code', 'photo', 'bio')
+        fields = ('country', 'city', 'address', 'postal_code', 'photo', 'bio')
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,7 +14,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'email', 'first_name', 'last_name', 'password', 'profile')
+        fields = ('url', 'email', 'title', 'first_name', 'last_name', 'password', 'profile')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -33,7 +33,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.save()
 
-        profile.title = profile_data.get('title', profile.title)
         profile.country = profile_data.get('country', profile.country)
         profile.city = profile_data.get('city', profile.city)
         profile.address = profile_data.get('address', profile.address)
