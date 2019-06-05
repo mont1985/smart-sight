@@ -68,7 +68,7 @@ class Hospital(models.Model):
     administrator = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
-        related_name='practitioners',
+        related_name='administrator',
         limit_choices_to={'title': 'ADMIN'})
     doctors = models.ForeignKey(
         User,
