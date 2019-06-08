@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import User, UserProfile, Hospital, Patient, PatientDiagnoses
+from .models import User, UserProfile, Hospital, HospitalDoctor, Patient, PatientDiagnoses
 
 
 class UserProfileInline(admin.StackedInline):
@@ -41,5 +41,12 @@ class PatientAdmin(admin.ModelAdmin):
     inlines = [DiagnosisInline]
 
 
-admin.site.register(Hospital)
+class DoctorsInline(admin.StackedInline):
+    extra = 1
+    model = HospitalDoctor
+
+
+@admin.register(Hospital)
+class HospitalAdmin(admin.ModelAdmin):
+    inlines = [DoctorsInline]
 

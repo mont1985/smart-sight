@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, UserProfile
+from .models import User, UserProfile, HospitalDoctor, Hospital
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -42,3 +42,20 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile.save()
 
         return instance
+
+
+class HospitalDoctorSerializer(serializers.ModelSerializer):
+    doctor = UserSerializer()
+
+    class Meta:
+        model = HospitalDoctor
+        fields = ('doctor', 'date_registered')
+
+
+class HospitalSerializer(serializers.HyperlinkedModelSerializer):
+    doctors = HospitalDoctorSerializer(many=True)
+    administrator = UserSerializer()
+
+    class Meta:
+        model = Hospital
+        fields = ('url', 'name', 'country', 'address', 'postal_code', 'level', 'administrator', 'doctors')

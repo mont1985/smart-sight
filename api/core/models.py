@@ -71,14 +71,25 @@ class Hospital(models.Model):
         on_delete=models.PROTECT,
         related_name='administrator',
         limit_choices_to={'title': 'ADMIN'})
-    doctors = models.ForeignKey(
+
+    def __str__(self):
+        return self.name
+
+
+class HospitalDoctor(models.Model):
+    hospital = models.ForeignKey(
+        Hospital,
+        on_delete=models.PROTECT,
+        related_name='doctors')
+    doctor = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
         related_name='practitioners',
         limit_choices_to={'title': 'DOCTOR'})
+    date_registered = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return self.name
+        return "{}'s doctor".format(self.hospital)
 
 
 class Patient(models.Model):
@@ -101,7 +112,7 @@ class PatientDiagnoses(models.Model):
     patient = models.ForeignKey(
         Patient,
         on_delete=models.PROTECT,
-        related_name='appointments')
+        related_name='diagnosis')
     image = models.ImageField(upload_to='eye_photos/')
     model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True)
     is_true = models.BooleanField(default=False)
