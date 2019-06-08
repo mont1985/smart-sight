@@ -48,7 +48,7 @@ class User(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='profile')
     country = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
@@ -114,7 +114,7 @@ class PatientDiagnoses(models.Model):
     hospital_visited = models.ForeignKey(
         Hospital,
         on_delete=models.PROTECT,
-        related_name='hospital', )
+        related_name='hospital_visited', )
 
     def __str__(self):
         return "{}'s profile".format(self.patient)
