@@ -36,7 +36,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile.country = profile_data.get('country', profile.country)
         profile.city = profile_data.get('city', profile.city)
         profile.address = profile_data.get('address', profile.address)
-        profile.zip = profile_data.get('postal_code', profile.zip)
+        profile.postal_code = profile_data.get('postal_code', profile.postal_code)
         profile.photo = profile_data.get('photo', profile.photo)
         profile.city = profile_data.get('bio', profile.bio)
         profile.save()

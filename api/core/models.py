@@ -44,7 +44,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'title']
 
     def __str__(self):
-        return "{}".format(self.email)
+        return "{} {}".format(self.first_name, self.last_name)
 
 
 class UserProfile(models.Model):
@@ -92,15 +92,6 @@ class Patient(models.Model):
     county = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     postal_code = models.CharField(max_length=5)
-    doctor = models.ForeignKey(
-        User,
-        related_name='physician',
-        on_delete=models.PROTECT,
-        limit_choices_to={'title': 'DOCTOR'})
-    hospital_visited = models.ForeignKey(
-        Hospital,
-        on_delete=models.PROTECT,
-        related_name='hospitals',)
 
     def __str__(self):
         return self.name
@@ -115,6 +106,15 @@ class PatientDiagnoses(models.Model):
     model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True)
     is_true = models.BooleanField(default=False)
     doctors_comment = models.CharField(max_length=255, null=True)
+    doctor = models.ForeignKey(
+        User,
+        related_name='physician',
+        on_delete=models.PROTECT,
+        limit_choices_to={'title': 'DOCTOR'})
+    hospital_visited = models.ForeignKey(
+        Hospital,
+        on_delete=models.PROTECT,
+        related_name='hospital', )
 
     def __str__(self):
         return "{}'s profile".format(self.patient)

@@ -31,6 +31,15 @@ class UserAdmin(BaseUserAdmin):
     inlines = (UserProfileInline, )
 
 
+class DiagnosisInline(admin.StackedInline):
+    extra = 1
+    model = PatientDiagnoses
+
+
+@admin.register(Patient)
+class PatientAdmin(admin.ModelAdmin):
+    inlines = [DiagnosisInline]
+
+
 admin.site.register(Hospital)
-admin.site.register(PatientDiagnoses)
-admin.site.register(Patient)
+
