@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import User, UserProfile, HospitalDoctor, Hospital
+from .models import User, UserProfile, HospitalDoctor, Hospital, PatientDiagnoses, Patient
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -14,7 +14,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'email', 'title', 'first_name', 'last_name', 'password', 'profile')
+        fields = ('url', 'username', 'email', 'title', 'first_name', 'last_name', 'password', 'is_active', 'profile')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -30,6 +30,8 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile_data = validated_data.pop('profile')
         profile = instance.profile
 
+        instance.username = validated_data.get('username', instance.username)
+        instance.is_active = validated_data.get('is_active', instance.is_active)
         instance.email = validated_data.get('email', instance.email)
         instance.save()
 
@@ -59,3 +61,22 @@ class HospitalSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Hospital
         fields = ('url', 'name', 'country', 'address', 'postal_code', 'level', 'administrator', 'doctors')
+
+
+class DiagnosisSerializer(serializers.ModelSerializer):
+    hospital_visited = HospitalSerializer()
+    doctor = UserSerializer()
+
+    class Meta:
+        model = PatientDiagnoses
+        fields = ('image', 'model_diagnosis', 'is_true', 'doctors_comment', 'doctor', 'hospital_visited')
+
+
+class PatientSerializer(serializers.HyperlinkedModelSerializer):
+    diagnosis = DiagnosisSerializer(many=True)
+
+    class Meta:
+        model = Patient
+        fields = (
+            'name', 'age', 'gender', 'identification', 'email', 'contact',
+            'marital_status', 'county', 'address', 'postal_code', 'diagnosis')
