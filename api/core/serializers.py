@@ -80,3 +80,4 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
         fields = (
             'name', 'age', 'gender', 'identification', 'email', 'contact',
             'marital_status', 'county', 'address', 'postal_code', 'diagnosis')
+# overide create and update methods for all serializers

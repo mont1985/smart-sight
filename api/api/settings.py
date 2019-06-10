@@ -127,6 +127,10 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = os.path.join(BASE_DIR, 'images/')
 
+MODEL_URL = os.path.join(BASE_DIR, 'core/prediction_model/')
+
+DATASET_URL = os.path.join(MEDIA_URL, 'model_images/')
+
 MEDIA_ROOT = 'images'
 
 REST_FRAMEWORK = {
