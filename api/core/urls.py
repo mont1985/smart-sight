@@ -8,6 +8,7 @@ router.register(r'hospitals', HospitalViewSet)
 router.register(r'patients', PatientViewSet)
 router.register(r'doctors', DoctorsViewSet)
 
+
 urlpatterns = [
     path('', include(router.urls)),
     path('auth/', include('rest_auth.urls')),

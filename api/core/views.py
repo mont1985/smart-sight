@@ -21,3 +21,4 @@ class PatientViewSet(viewsets.ModelViewSet):
 class DoctorsViewSet(viewsets.ModelViewSet):
     queryset = HospitalDoctor.objects.all()
     serializer_class = HospitalDoctorsSerializer
+

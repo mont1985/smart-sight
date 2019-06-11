@@ -49,4 +49,3 @@ class DoctorsInline(admin.StackedInline):
 @admin.register(Hospital)
 class HospitalAdmin(admin.ModelAdmin):
     inlines = [DoctorsInline]
-
