@@ -14,8 +14,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'title', 'first_name', 'last_name', 'password', 'is_active', 'profile')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ('url', 'username', 'email', 'title', 'first_name', 'last_name', 'password', 'is_active', 'profile'
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
@@ -42,11 +41,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile.photo = profile_data.get('photo', profile.photo)
         profile.city = profile_data.get('bio', profile.bio)
         profile.save()
-
         return instance
 
 
-class HospitalDoctorSerializer(serializers.ModelSerializer):
+class HospitalDoctorSerializer(serializers.PrimaryKeyRelatedField, serializers.ModelSerializer):
     doctor = UserSerializer()
 
     class Meta:
@@ -54,13 +52,61 @@ class HospitalDoctorSerializer(serializers.ModelSerializer):
         fields = ('doctor', 'date_registered')
 
 
+class HospitalDoctorsSerializer(serializers.ModelSerializer):
+    doctor = UserSerializer()
+
+    class Meta:
+        model = HospitalDoctor
+        fields = ('doctor',)
+
+
 class HospitalSerializer(serializers.HyperlinkedModelSerializer):
-    doctors = HospitalDoctorSerializer(many=True)
-    administrator = UserSerializer()
+    doctors = HospitalDoctorSerializer(many=True, queryset=User.objects.filter(title='DOCTOR'))
+    administrator = UserSerializer(read_only=True)
+    owner = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
 
     class Meta:
         model = Hospital
-        fields = ('url', 'name', 'country', 'address', 'postal_code', 'level', 'administrator', 'doctors')
+        fields = ('url', 'name', 'country', 'address', 'postal_code', 'level', 'administrator', 'doctors', 'owner')
+
+    def create(self, validated_data):
+        doctors_data = validated_data.pop('doctors')
+        admin = validated_data.pop('owner')  # get admin from logged in user
+        hospital = Hospital(administrator=admin, **validated_data)
+        hospital.save()  # create hospital
+
+        for doctor in doctors_data:
+            HospitalDoctor.objects.create(hospital=hospital, doctor=doctor)
+        return hospital
+
+    def update(self, instance, validated_data):
+        stored_doctors = list(instance.doctors.all())
+        update_doctors = validated_data.pop('doctors')
+        # update hospital
+        import pdb; pdb.set_trace()
+        instance.name = validated_data.get('name', instance.name)
+        instance.country = validated_data.get('country', instance.country)
+        instance.address = validated_data.get('address', instance.address)
+        instance.postal_code = validated_data.get('postal_code', instance.postal_code)
+        instance.level = validated_data.get('level', instance.level)
+        instance.save()
+
+        # prepare id for doctors
+        stored_doctors_ids = [x.doctor.id for x in stored_doctors]
+        update_doctors_ids = [x.id for x in update_doctors]
+
+        # if doctor exists keep else delete
+        for doctor in stored_doctors:
+            if doctor.doctor.id not in update_doctors_ids:
+                doctor.delete()
+        # if new doctor create and add doctor.
+        for doctor in update_doctors:
+            if doctor.id not in stored_doctors_ids:
+                HospitalDoctor.objects.create(hospital=instance, doctor=doctor)
+
+        return instance
 
 
 class DiagnosisSerializer(serializers.ModelSerializer):

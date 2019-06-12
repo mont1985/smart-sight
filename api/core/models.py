@@ -68,7 +68,7 @@ class Hospital(models.Model):
     level = models.CharField(choices=LEVELS, max_length=6)
     administrator = models.ForeignKey(
         User,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='administrator',
         limit_choices_to={'title': 'ADMIN'})
 
@@ -79,17 +79,17 @@ class Hospital(models.Model):
 class HospitalDoctor(models.Model):
     hospital = models.ForeignKey(
         Hospital,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='doctors')
     doctor = models.ForeignKey(
         User,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='practitioners',
         limit_choices_to={'title': 'DOCTOR'})
     date_registered = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return "{}'s doctor".format(self.hospital)
+        return "{}".format(self.doctor)
 
 
 class Patient(models.Model):
@@ -111,7 +111,7 @@ class Patient(models.Model):
 class PatientDiagnoses(models.Model):
     patient = models.ForeignKey(
         Patient,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='diagnosis')
     image = models.ImageField(upload_to='eye_photos/')
     model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True)
@@ -120,11 +120,11 @@ class PatientDiagnoses(models.Model):
     doctor = models.ForeignKey(
         User,
         related_name='physician',
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         limit_choices_to={'title': 'DOCTOR'})
     hospital_visited = models.ForeignKey(
         Hospital,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='hospital_visited', )
 
     def __str__(self):
