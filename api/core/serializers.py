@@ -160,6 +160,7 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
         label, confidence = classify_image(diagnosis.image.path)
         diagnosis.model_diagnosis = label
         diagnosis.confidence_factor = confidence
+        diagnosis.save()
 
         return patient
 
@@ -183,6 +184,11 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
         diagnosis.image = validated_data.get('image', diagnosis.image)
         diagnosis.is_true = validated_data.get('is_true', diagnosis.is_true)
         diagnosis.doctors_comment = validated_data.get('comment', diagnosis.doctors_comment)
+        diagnosis.save()
+        if diagnosis.image:
+            label, confidence = classify_image(diagnosis.image.path)
+            diagnosis.model_diagnosis = label
+            diagnosis.confidence_factor = confidence
         diagnosis.save()
 
         return instance
