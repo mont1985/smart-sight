@@ -20,7 +20,8 @@ from django.conf import settings
 matplotlib.use("Agg")
 
 
-def generate_prediction_model(epochs):
+def generate_prediction_model():
+    epochs = 100
     # initialize the number of epochs to train for, initial learning rate, and batch size
     path_to_model = settings.MODEL_URL
     # path to general folder of images

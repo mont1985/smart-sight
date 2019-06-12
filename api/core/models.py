@@ -109,11 +109,11 @@ class Patient(models.Model):
 
 
 class PatientDiagnoses(models.Model):
-    patient = models.ForeignKey(
+    patient = models.OneToOneField(
         Patient,
         on_delete=models.CASCADE,
         related_name='diagnosis')
-    image = models.ImageField(upload_to='eye_photos/')
+    image = models.ImageField(upload_to='eye_photos/', null=True)
     model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True)
     is_true = models.BooleanField(default=False)
     doctors_comment = models.CharField(max_length=255, null=True)
