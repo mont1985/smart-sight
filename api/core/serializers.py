@@ -14,7 +14,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ('url', 'username', 'email', 'title', 'first_name', 'last_name', 'password', 'is_active', 'profile'
+        fields = ('url', 'username', 'email', 'title', 'first_name', 'last_name', 'password', 'is_active', 'profile')
 
     def create(self, validated_data):
         profile_data = validated_data.pop('profile')
