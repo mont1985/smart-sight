@@ -33,7 +33,6 @@ def classify_image(path_to_image):
     label = "{}: {:.2f}%".format(label, proba * 100)
     print("{} {}".format(label, proba*100))
 
-
     # draw the label on the image
     output = imutils.resize(orig, width=496)
     cv2.putText(output, label, (10, 25),  cv2.FONT_HERSHEY_SIMPLEX,	0.7, (0, 255, 0), 2)
