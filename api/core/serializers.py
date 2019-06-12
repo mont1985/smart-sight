@@ -121,7 +121,7 @@ class DiagnosisSerializer(serializers.ModelSerializer):
 
 
 class PatientSerializer(serializers.HyperlinkedModelSerializer):
-    diagnosis = DiagnosisSerializer(many=True, read_only=True)
+    diagnosis = DiagnosisSerializer(read_only=True)
     owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
     hospital = serializers.IntegerField(write_only=True, required=False)
     image = serializers.ImageField(write_only=True, required=False)
@@ -161,7 +161,7 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
         return patient
 
     def update(self, instance, validated_data):
-        diagnosis = list(instance.diagnosis.all())[0]
+        diagnosis = instance.diagnosis
 
         # update user
         instance.name = validated_data.get('name', instance.name)

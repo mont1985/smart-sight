@@ -109,7 +109,7 @@ class Patient(models.Model):
 
 
 class PatientDiagnoses(models.Model):
-    patient = models.ForeignKey(
+    patient = models.OneToOneField(
         Patient,
         on_delete=models.CASCADE,
         related_name='diagnosis')
