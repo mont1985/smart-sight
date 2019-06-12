@@ -3,13 +3,14 @@ from keras.models import load_model
 import numpy as np
 import imutils
 import cv2
+import os
 
 from django.conf import settings
 
 
 def classify_image(path_to_image):
 
-    path_to_model = settings.MODEL_URL  # add name of model(s) to path
+    path_to_model = os.path.join(settings.MODEL_URL, 'test.model')  # add name of model(s) to path
     # load the image
     image = cv2.imread(path_to_image)
     orig = image.copy()
@@ -28,13 +29,11 @@ def classify_image(path_to_image):
     (normal, dme) = model.predict(image)[0]
 
     # build the label
-    label = "Diabetic Macular Edema" if dme > normal else "Normal"
+    label = "DME" if dme > normal else "NORMAL"
     proba = dme if dme > normal else normal
-    label = "{}: {:.2f}%".format(label, proba * 100)
-    print("{} {}".format(label, proba*100))
 
     # draw the label on the image
     output = imutils.resize(orig, width=496)
     cv2.putText(output, label, (10, 25),  cv2.FONT_HERSHEY_SIMPLEX,	0.7, (0, 255, 0), 2)
 
-    return label
+    return label, proba*100

@@ -21,8 +21,7 @@ matplotlib.use("Agg")
 
 
 def generate_prediction_model():
-    epochs = 100
-    # initialize the number of epochs to train for, initial learning rate, and batch size
+    epochs = 2  # initialize the number of epochs to train for, initial learning rate, and batch size
     path_to_model = settings.MODEL_URL
     # path to general folder of images
     path_to_dataset = settings.DATASET_URL
@@ -102,7 +101,7 @@ def generate_prediction_model():
 
     # save the model to disk
     print("[INFO] serializing network...")
-    model.save(path_to_model)
+    model.save(os.path.join(path_to_model, 'test.model'))
 
     print(
         "\n Training Accuracy: {}%\n Validation Accuracy: {}%\n Training Losss: {}%\n Validation Loss: {}%\n".format(
@@ -127,7 +126,7 @@ def generate_prediction_model():
 
     # Plot the coordinartes on a graph
     graph_path = os.path.join(settings.DATASET_URL, 'graphs/')
-    plt.savefig(epochs + "epochs.png")
+    plt.savefig(str(epochs) + "epochs.png")
 
     # Move generated image to the graphs folder
     file_path = os.path.join(os.getcwd(), str(epochs) + "epochs.png")

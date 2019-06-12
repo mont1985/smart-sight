@@ -115,6 +115,7 @@ class PatientDiagnoses(models.Model):
         related_name='diagnosis')
     image = models.ImageField(upload_to='eye_photos/', null=True)
     model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True)
+    confidence_factor = models.IntegerField(null=True)
     is_true = models.BooleanField(default=False)
     doctors_comment = models.CharField(max_length=255, null=True)
     doctor = models.ForeignKey(

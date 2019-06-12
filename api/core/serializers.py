@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from .models import User, UserProfile, HospitalDoctor, Hospital, PatientDiagnoses, Patient
 
+from .prediction_model.test import classify_image
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -117,7 +118,8 @@ class DiagnosisSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PatientDiagnoses
-        fields = ('image', 'model_diagnosis', 'is_true', 'doctors_comment', 'doctor', 'hospital_visited')
+        fields = ('image', 'model_diagnosis', 'confidence_factor',
+                  'is_true', 'doctors_comment', 'doctor', 'hospital_visited')
 
 
 class PatientSerializer(serializers.HyperlinkedModelSerializer):
@@ -157,6 +159,9 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
         }
         diagnosis = PatientDiagnoses(**diagnosis_data)
         diagnosis.save()
+        label, confidence = classify_image(diagnosis.image.path)
+        diagnosis.model_diagnosis = label
+        diagnosis.confidence_factor = confidence
 
         return patient
 
@@ -177,6 +182,7 @@ class PatientSerializer(serializers.HyperlinkedModelSerializer):
         instance.save()
 
         # update diagnosis
+        diagnosis.image = validated_data.get('image', diagnosis.image)
         diagnosis.is_true = validated_data.get('is_true', diagnosis.is_true)
         diagnosis.doctors_comment = validated_data.get('comment', diagnosis.doctors_comment)
         diagnosis.save()
