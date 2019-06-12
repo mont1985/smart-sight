@@ -24,7 +24,7 @@
             <!--<img alt="Image placeholder" src="img/theme/team-4-800x800.jpg">-->
             <!--</span>-->
             <div class="media-body ml-2 d-none d-lg-block">
-              <span class="mb-0 text-sm  font-weight-bold">Dr. John Doe</span>
+              <span class="mb-0 text-sm  font-weight-bold ">{{this.$store.state.user.name}}</span>
             </div>
           </div>
 
@@ -77,6 +77,11 @@ export default {
     },
     toggleMenu() {
       this.showMenu = !this.showMenu;
+    }
+  },
+  mounted(){
+    if (this.$store.state.token == ""){
+      this.$router.push('login') 
     }
   }
 };

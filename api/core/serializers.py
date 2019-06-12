@@ -33,7 +33,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
         instance.username = validated_data.get('username', instance.username)
         instance.is_active = validated_data.get('is_active', instance.is_active)
-
         instance.email = validated_data.get('email', instance.email)
         instance.save()
 
@@ -41,7 +40,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         profile.city = profile_data.get('city', profile.city)
         profile.address = profile_data.get('address', profile.address)
         profile.postal_code = profile_data.get('postal_code', profile.postal_code)
-
         profile.photo = profile_data.get('photo', profile.photo)
         profile.city = profile_data.get('bio', profile.bio)
         profile.save()

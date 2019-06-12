@@ -37,13 +37,18 @@ export default new Router({
         },
         {
           path: '/dashboards',
-          name: 'icons',
+          name: 'iconz',
           component: () => import(/* webpackChunkName: "demo" */ './views/doctor/Icons.vue')
         },
         {
           path: '/profile',
           name: 'profile',
           component: () => import(/* webpackChunkName: "demo" */ './views/doctor/UserProfile.vue')
+        },
+        {
+          path: '/patient',
+          name: 'patient',
+          component: () => import(/* webpackChunkName: "demo" */ './views/doctor/PatientProfile.vue')
         },
         {
           path: '/maps',
@@ -57,46 +62,46 @@ export default new Router({
         }
       ]
     },
-    {
-      path: '/dash',
-      redirect: 'dashboards',
-      component: DashboardLayout,
-      children: [
-        {
-          path: '/dashboards',
-          name: 'dashboards',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
-        },
-        {
-          path: '/icons',
-          name: 'icons',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
-        },
-        {
-          path: '/dashboards',
-          name: 'icons',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
-        },
-        {
-          path: '/profile',
-          name: 'profile',
-          component: () => import(/* webpackChunkName: "demo" */ './views/UserProfile.vue')
-        },
-        {
-          path: '/maps',
-          name: 'maps',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Maps.vue')
-        },
-        {
-          path: '/tables',
-          name: 'tables',
-          component: () => import(/* webpackChunkName: "demo" */ './views/Tables.vue')
-        }
-      ]
-    },
+    // {
+    //   path: '/dash',
+    //   redirect: 'dashboards',
+    //   component: DashboardLayout,
+    //   children: [
+    //     {
+    //       path: '/dashboards',
+    //       name: 'dashboards',
+    //       // route level code-splitting
+    //       // this generates a separate chunk (about.[hash].js) for this route
+    //       // which is lazy-loaded when the route is visited.
+    //       component: () => import(/* webpackChunkName: "demo" */ './views/Dashboard.vue')
+    //     },
+    //     {
+    //       path: '/icons',
+    //       name: 'icons',
+    //       component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
+    //     },
+    //     {
+    //       path: '/dashboards',
+    //       name: 'icons',
+    //       component: () => import(/* webpackChunkName: "demo" */ './views/Icons.vue')
+    //     },
+    //     {
+    //       path: '/profile',
+    //       name: 'profile',
+    //       component: () => import(/* webpackChunkName: "demo" */ './views/UserProfile.vue')
+    //     },
+    //     {
+    //       path: '/maps',
+    //       name: 'maps',
+    //       component: () => import(/* webpackChunkName: "demo" */ './views/Maps.vue')
+    //     },
+    //     {
+    //       path: '/tables',
+    //       name: 'tables',
+    //       component: () => import(/* webpackChunkName: "demo" */ './views/Tables.vue')
+    //     }
+    //   ]
+    // },
     {
       path: '/',
       redirect: 'login',
