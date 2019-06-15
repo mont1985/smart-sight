@@ -24,7 +24,7 @@ SECRET_KEY = '3f0z(26i1zl=)ds^s5dyys_v-l*z4hbkpfqe=9*rvsu!kj)07@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+CORS_ORIGIN_ALLOW_ALL = DEBUG
 ALLOWED_HOSTS = []
 
 
@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'core',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth'
+    'rest_auth',
+    'corsheaders'
 ]
 
 AUTH_USER_MODEL = 'core.User'
@@ -53,6 +54,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'
@@ -126,6 +129,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 MEDIA_URL = os.path.join(BASE_DIR, 'images/')
+
+MODEL_URL = os.path.join(BASE_DIR, 'core/prediction_model/')
+
+DATASET_URL = os.path.join(MEDIA_URL, 'model_images/')
 
 MEDIA_ROOT = 'images'
 

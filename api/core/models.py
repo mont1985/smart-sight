@@ -44,11 +44,11 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name', 'title']
 
     def __str__(self):
-        return "{}".format(self.email)
+        return "{} {}".format(self.first_name, self.last_name)
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='profile')
     country = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
@@ -68,17 +68,28 @@ class Hospital(models.Model):
     level = models.CharField(choices=LEVELS, max_length=6)
     administrator = models.ForeignKey(
         User,
-        on_delete=models.PROTECT,
+        on_delete=models.CASCADE,
         related_name='administrator',
         limit_choices_to={'title': 'ADMIN'})
-    doctors = models.ForeignKey(
-        User,
-        on_delete=models.PROTECT,
-        related_name='practitioners',
-        limit_choices_to={'title': 'DOCTOR'})
 
     def __str__(self):
         return self.name
+
+
+class HospitalDoctor(models.Model):
+    hospital = models.ForeignKey(
+        Hospital,
+        on_delete=models.CASCADE,
+        related_name='doctors')
+    doctor = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='practitioners',
+        limit_choices_to={'title': 'DOCTOR'})
+    date_registered = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return "{}".format(self.doctor)
 
 
 class Patient(models.Model):
@@ -92,29 +103,30 @@ class Patient(models.Model):
     county = models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     postal_code = models.CharField(max_length=5)
-    doctor = models.ForeignKey(
-        User,
-        related_name='physician',
-        on_delete=models.PROTECT,
-        limit_choices_to={'title': 'DOCTOR'})
-    hospital_visited = models.ForeignKey(
-        Hospital,
-        on_delete=models.PROTECT,
-        related_name='hospitals',)
 
     def __str__(self):
         return self.name
 
 
 class PatientDiagnoses(models.Model):
-    patient = models.ForeignKey(
+    patient = models.OneToOneField(
         Patient,
-        on_delete=models.PROTECT,
-        related_name='appointments')
-    image = models.ImageField(upload_to='eye_photos/')
+        on_delete=models.CASCADE,
+        related_name='diagnosis')
+    image = models.ImageField(upload_to='eye_photos/', null=True)
     model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True)
+    confidence_factor = models.IntegerField(null=True)
     is_true = models.BooleanField(default=False)
     doctors_comment = models.CharField(max_length=255, null=True)
+    doctor = models.ForeignKey(
+        User,
+        related_name='physician',
+        on_delete=models.CASCADE,
+        limit_choices_to={'title': 'DOCTOR'})
+    hospital_visited = models.ForeignKey(
+        Hospital,
+        on_delete=models.CASCADE,
+        related_name='hospital_visited', )
 
     def __str__(self):
         return "{}'s profile".format(self.patient)

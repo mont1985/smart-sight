@@ -54,6 +54,7 @@
         </div>
 </template>
 <script>
+import axios from 'axios';
   export default {
     name: 'login',
     data() {
@@ -63,6 +64,14 @@
           password: ''
         }
       }
+    },
+    methods: {
+        helloworld: function(){
+            console.log("Hello Lewis");
+        }
+    },
+    mounted (){
+        helloworld()
     }
   }
 </script>
