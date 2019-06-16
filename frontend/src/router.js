@@ -9,7 +9,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: 'dashboard',
+      redirect: 'view_patients',
       component: DashboardLayout,
       children: [
         {

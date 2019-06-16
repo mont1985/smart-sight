@@ -91,7 +91,7 @@
                             self.$store.state.user.email = response.data.user.email;
                             self.$store.state.user.pk = response.data.user.pk;
                             self.$store.state.user.name = response.data.user.first_name + " " + response.data.user.last_name;
-                            self.$router.push('dashboard') 
+                            self.$router.push('view_patients') 
                         }
                         else{
                             alert("Check credentials");//

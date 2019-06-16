@@ -1,9 +1,7 @@
 <template>
     <div>
-        <base-header
-                class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-                style="min-height: 600px; background-image: url(img/7.jpg); background-size: cover; background-position: center top;"
-        >
+        <base-header class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+            style="min-height: 600px; background-image: url(img/7.jpg); background-size: cover; background-position: center top;">
             <!-- Mask -->
             <span class="mask bg-gradient-success opacity-5"></span>
             <!-- Header container -->
@@ -101,87 +99,57 @@
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-4 col-sm-12">
-                                    <base-input
-                                            type="text"
-                                            alternative=""
-                                            label="Name"
-                                            placeholder="Partient's name"
-                                            input-classes="form-control-alternative"
-                                            v-model="patient.name"
-                                    />
+                                    <base-input type="text" alternative="" label="Name" placeholder="Partient's name"
+                                        input-classes="form-control-alternative" v-model="patient.name" />
                                 </div>
                                 <div class="col-lg-4 col-sm-12">
-                                    <base-input
-                                            alternative=""
-                                            label="Age"
-                                            placeholder="Enter patient's age"
-                                            input-classes="form-control-alternative"
-                                            v-model="patient.age"
-                                            type="number"
-                                    />
+                                    <base-input alternative="" label="Age" placeholder="Enter patient's age"
+                                        input-classes="form-control-alternative" v-model="patient.age" type="number" />
                                 </div>
                                 <div class="col-lg-4 col-sm-12">
-                                    <base-input
-                                            required
-                                            alternative=""
-                                            label="Id/Passport number"
-                                            placeholder="1234567"
-                                            input-classes="form-control-alternative"
-                                            v-model="patient.passport"
-                                            type="number"
-                                    />
+                                    <base-input required alternative="" label="Id/Passport number" placeholder="1234567"
+                                        input-classes="form-control-alternative" v-model="patient.passport"
+                                        type="number" />
                                 </div>
-                                <div class="col-lg-5 col-sm-12">
-                                    <base-input
-                                            type="email"
-                                            required
-                                            alternative=""
-                                            label="Email address"
-                                            placeholder="jesse@example.com"
-                                            input-classes="form-control-alternative"
-                                            v-model="patient.email"
-                                    />
-                                </div>
-
-                                <div class="col-lg-3 col-sm-12">
-                                    <base-input
-                                            alternative=""
-                                            label="Contact"
-                                            placeholder="Enter patient's phone number"
-                                            input-classes="form-control-alternative"
-                                            v-model="patient.phoneNumber"
-                                            type="number"
-                                    />
+                                <div class="col-lg-4 col-sm-12">
+                                    <base-input type="email" alternative="" label="EMail" placeholder="Patient's email"
+                                        input-classes="form-control-alternative" v-model="patient.email" />
                                 </div>
                                 <div class="col-lg-3 col-sm-12">
                                     <div class="mb-3">
-                                        <small class="text-uppercase font-weight-bold"
-                                        >Marital Status</small
-                                        >
+                                        <small class="text-uppercase font-weight-bold">Gender</small>
                                     </div>
                                     <div class="custom-control custom-radio mb-3">
-                                        <input
-                                                id="single"
-                                                type="radio"
-                                                class="custom-control-input"
-                                                v-model="patient.maritalStatus"
-                                                value="single"
-                                        />
-                                        <label for="single" class="custom-control-label"
-                                        >Single</label
-                                        >
+                                        <input id="male" type="radio" class="custom-control-input"
+                                            v-model="patient.gender" value="M" />
+                                        <label for="male" class="custom-control-label">Male</label>
                                     </div>
                                     <div class="custom-control custom-radio mb-3">
-                                        <input
-                                                id="married"
-                                                type="radio"
-                                                class="custom-control-input"
-                                                v-model="patient.maritalStatus"
-                                                value="married"
-                                        />
-                                        <label for="married" class="custom-control-label"
-                                        >Married</label
-                                        >
+                                        <input id="female" type="radio" class="custom-control-input"
+                                            v-model="patient.gender" value="F" />
+                                        <label for="female" class="custom-control-label">Female</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-3 col-sm-12">
+                                    <base-input alternative="" label="Contact"
+                                        placeholder="Enter patient's phone number"
+                                        input-classes="form-control-alternative" v-model="patient.phoneNumber"
+                                        type="number" />
+                                </div>
+                                <div class="col-lg-3 col-sm-12">
+                                    <div class="mb-3">
+                                        <small class="text-uppercase font-weight-bold">Marital Status</small>
+                                    </div>
+                                    <div class="custom-control custom-radio mb-3">
+                                        <input id="single" type="radio" class="custom-control-input"
+                                            v-model="patient.maritalStatus" value="SINGLE" />
+                                        <label for="single" class="custom-control-label">Single</label>
+                                    </div>
+                                    <div class="custom-control custom-radio mb-3">
+                                        <input id="married" type="radio" class="custom-control-input"
+                                            v-model="patient.maritalStatus" value="MARRIED" />
+                                        <label for="married" class="custom-control-label">Married</label>
                                     </div>
                                 </div>
                             </div>
@@ -192,28 +160,16 @@
                         <div class="pl-lg-4">
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <base-input
-                                            alternative=""
-                                            label="Address"
-                                            placeholder="Home Address"
-                                            input-classes="form-control-alternative"
-                                            v-model="patient.address"
-                                    />
+                                    <base-input alternative="" label="Address" placeholder="Home Address"
+                                        input-classes="form-control-alternative" v-model="patient.address" />
                                 </div>
                                 <div class="col-lg-4">
-                                    <base-input
-                                            alternative=""
-                                            label="Postal code"
-                                            placeholder="Postal code"
-                                            input-classes="form-control-alternative"
-                                            v-model="patient.zipCode"
-                                    />
+                                    <base-input alternative="" label="Postal code" placeholder="Postal code"
+                                        input-classes="form-control-alternative" v-model="patient.zipCode" />
                                 </div>
                                 <div class="col-lg-4">
                                     <div class="mb-2">
-                                        <small style="font-size: 14px; font-weight: bold"
-                                        >County</small
-                                        >
+                                        <small style="font-size: 14px; font-weight: bold">County</small>
                                     </div>
                                     <select class="custom-select" v-model="patient.county">
                                         <option value="" selected>Select county</option>
@@ -232,32 +188,21 @@
                                 <div class="col-sm-12 col-lg-8">
                                     <div class="form-group">
                                         <base-input alternative="">
-                      <textarea
-                              rows="4"
-                              class="form-control form-control-alternative"
-                              placeholder="The patient's problem ..."
-                      ></textarea>
+                                            <textarea rows="4" class="form-control form-control-alternative"
+                                                placeholder="The patient's problem ..." v-model="patient.about"></textarea>
                                         </base-input>
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-lg-4">
-                                    <div class="custom-file">
-                                        <input
-                                                type="file"
-                                                ref="file"
-                                                class="custom-file-input"
-                                                v-on:change="handleImage()"
-                                                id="customFile"
-                                        />
-                                        <label class="custom-file-label" for="customFile"
-                                        >Choose file</label
-                                        >
+                                    <div >
+                                        <input type="file" ref="file" id="file"/>
+                                        <label class="" for="file">Choose file</label>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-primary">Next step</button>
+                            <button class="btn btn-primary" v-on:click="uploadImage()">Next step</button>
                         </div>
                     </form>
                 </template>
@@ -273,7 +218,6 @@
             return {
                 patient: {
                     name: "",
-                    email: "",
                     age: "",
                     passport: "",
                     gender: "",
@@ -281,7 +225,6 @@
                     phoneNumber: "",
                     address: "",
                     county: "",
-                    country: "",
                     zipCode: "",
                     about: "",
                     image: ""
@@ -290,30 +233,71 @@
         },
 
         methods: {
-            uploadImage() {
+            uploadImage: function () {
+                this.file = this.$refs.file.files[0];
+                console.log(this.patient)
                 let self = this;
-                // https://serversideup.net/uploading-files-vuejs-axios/
-                axios
-                    .post("", self.patient.image, {
+                axios.post('http://localhost:8000/api/v1/patients/', 
+                
+                        {name: self.patient.name,
+                        age: self.patient.age,
+                        gender: self.patient.gender,
+                        identification: self.patient.passport,
+                        email: self.patient.email,
+                        contact: self.patient.phoneNumber,
+                        marital_status: self.patient.maritalStatus,
+                        county: self.patient.county,
+                        address: self.patient.address,
+                        postal_code: self.patient.zipCode,
+                        hospital: 1,
+                        image: self.patient.image},
+                        {
                         headers: {
-                            "Content-Type": "multipart/form-data"
+                            'Authorization': 'JWT ' + this.$store.state.token,
+                            // 'Content-Type': 'multipart/form-data'
                         }
                     })
-                    .then(function() {
-                        console.log("SUCCESS!!");
+                    .then(function (response) {
+                        var x = response.data;
+                        console.log(self.patient.name)
+                        // handle success
+                        console.table(x);
+                        // for (var i = 0; i < x.length; i++) {
+                        //     self.ourData.push(x[i])
+                        //     var y = {
+                        //         Name: "",
+                        //         age: "",
+                        //         gender: "",
+                        //         marital_Status: "",
+                        //         contact: "",
+                        //         county: "",
+                        //         address: "",
+                        //         postal_code: "",
+                        //         doctors_diagnosis: "",
+                        //         system_diagnosis: "",
+                        //         system_confidence: "",
+                        //     }
+                        // }
+                        // console.log(self.ourData);
                     })
-                    .catch(function() {
-                        console.log("FAILURE!!");
+                    .catch(function (error) {
+                        // handle error
+                        console.log("our error  " + error);
+                    })
+                    .finally(function () {
+                        // always executed
+                        // console.table(self.tableData);  
                     });
             },
-            uploadData() {},
-            verifyFormData() {},
 
             handleImage() {
                 this.patient.file = this.$refs.file.files[0];
                 let formData = new FormData();
                 formData.append("file", this.patient.file);
             }
+        },
+        mounted() {
+
         }
     };
 </script>

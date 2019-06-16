@@ -114,8 +114,8 @@ class PatientDiagnoses(models.Model):
         on_delete=models.CASCADE,
         related_name='diagnosis')
     image = models.ImageField(upload_to='eye_photos/', null=True)
-    model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True)
-    confidence_factor = models.IntegerField(null=True)
+    model_diagnosis = models.CharField(choices=DIAGNOSIS, max_length=7, null=True, default='')
+    confidence_factor = models.IntegerField(null=True, default=0)
     is_true = models.BooleanField(default=False)
     doctors_comment = models.CharField(max_length=255, null=True)
     doctor = models.ForeignKey(

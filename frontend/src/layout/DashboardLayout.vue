@@ -6,19 +6,19 @@
       title="Smart Sight"
     >
       <template slot="links">
-        <sidebar-item
+        <!-- <sidebar-item
           :link="{
             name: 'Dashboard',
             icon: 'ni ni-tv-2 text-primary',
             path: '/dashboard'
           }"
-        />
+        /> -->
 
 
 
         <sidebar-item :link="{name: 'New patient', icon: 'ni ni-fat-add text-blue', path: '/new_patient'}"/>
         <sidebar-item :link="{name: 'View Patients', icon: 'ni ni-planet text-blue', path: '/view_patients'}"/>
-        <sidebar-item :link="{name: 'Patient', icon: 'ni ni-planet text-blue', path: '/patient'}"/>
+        <sidebar-item :link="{name: 'Patient', icon: 'ni ni-tv-2', path: '/patient'}"/>
         <!--<sidebar-item :link="{name: 'View Scans', icon: 'ni ni-pin-3 text-orange', path: '/maps'}"/>-->
         <!--<sidebar-item :link="{name: 'User Profile', icon: 'ni ni-single-02 text-yellow', path: '/profile'}"/>-->
         <!--<sidebar-item :link="{name: 'Tables', icon: 'ni ni-bullet-list-67 text-red', path: '/tables'}"/>-->

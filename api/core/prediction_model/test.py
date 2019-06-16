@@ -10,7 +10,7 @@ from django.conf import settings
 
 def classify_image(path_to_image):
 
-    path_to_model = os.path.join(settings.MODEL_URL, 'test.model')  # add name of model(s) to path
+    path_to_model = os.path.join(settings.MODEL_URL, 'dme.model')  # add name of model(s) to path
     # load the image
     image = cv2.imread(path_to_image)
     orig = image.copy()

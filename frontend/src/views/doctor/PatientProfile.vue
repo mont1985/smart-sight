@@ -43,17 +43,17 @@
                                         <div class="col-lg-4 col-sm-12">
                                             <base-input alternative="" label="Age" placeholder="Enter patient's age"
                                                 input-classes="form-control-alternative" v-model="patient.age"
-                                                type="number" disabled/>
+                                                type="number" disabled />
                                         </div>
                                         <div class="col-lg-4 col-sm-12">
                                             <base-input required alternative="" label="Id/Passport number"
                                                 placeholder="1234567" input-classes="form-control-alternative"
-                                                v-model="patient.passport"disabled type="number" />
+                                                v-model="patient.passport" disabled type="number" />
                                         </div>
                                         <div class="col-lg-5 col-sm-12">
-                                            <base-input type="email" required alternative="" label="Email address"
-                                                placeholder="jesse@example.com" input-classes="form-control-alternative"
-                                                v-model="patient.email"disabled />
+                                            <base-input type="email" required alternative="" label="Gender"
+                                                placeholder="Male" input-classes="form-control-alternative"
+                                                v-model="patient.gender" disabled />
                                         </div>
 
                                         <div class="col-lg-3 col-sm-12">
@@ -65,7 +65,7 @@
                                         <div class="col-lg-4 col-sm-12">
                                             <base-input alternative="" label="Marital Status" placeholder=""
                                                 input-classes="form-control-alternative" v-model="patient.maritalStatus"
-                                                type="text" disabled/>
+                                                type="text" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -76,16 +76,18 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <base-input alternative="" label="Address" placeholder="Home Address"
-                                                input-classes="form-control-alternative" v-model="patient.address" disabled/>
+                                                input-classes="form-control-alternative" v-model="patient.address"
+                                                disabled />
                                         </div>
                                         <div class="col-lg-4">
                                             <base-input alternative="" label="Postal code" placeholder="Postal code"
-                                                input-classes="form-control-alternative" v-model="patient.zipCode"disabled/>
+                                                input-classes="form-control-alternative" v-model="patient.zipCode"
+                                                disabled />
                                         </div>
                                         <div class="col-lg-4 col-sm-12">
                                             <base-input alternative="" label="County" placeholder=""
                                                 input-classes="form-control-alternative" v-model="patient.county"
-                                                type="text" disabled/>
+                                                type="text" disabled />
                                         </div>
                                     </div>
                                 </div>
@@ -103,14 +105,17 @@
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-lg-4">
-                                            <h3>System Diagnosis: AMD</h3>
-                                            <h3>Confidence score: 20%</h3>
-                                            <h3>Doctor's diagnosis: 20%</h3>
+                                            <h3>System Diagnosis: {{patient.prediction}}</h3>
+                                            <h3>Confidence score: {{patient.confidence}}%</h3>
+                                            <h3>Doctor's diagnosis: {{patient.verdict}}</h3>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center">
-                                    <button class="btn btn-primary">Next step</button>
+                                    <button :href="patient.image" :download="patient.name" class="btn btn-primary">Download image</button>
+                                    <!-- <a :href="patient.image" :download="patient.name + '.TIFF'">
+  <img :src="patient.image  " alt="W3Schools"> -->
+</a>
                                 </div>
                             </form>
                         </template>
@@ -140,6 +145,10 @@
                     county: "",
                     zipCode: "",
                     about: "",
+                    image: "",
+                    confidence: "",
+                    prediction: "",
+                    verdict: "",
                     image: ""
                 }
             }
@@ -147,25 +156,32 @@
         methods: {
             getPatientDetails: function (patient) {
                 var self = this;
-                axios.get('http://127.0.0.1:8000/api/v1/patients/' + patient + "/",{headers:  {
-                        'Authorization': 'JWT ' + this.$store.state.token
-                    }})
+                axios.get('http://127.0.0.1:8000/api/v1/patients/' + patient + "/", {
+                        headers: {
+                            'Authorization': 'JWT ' + this.$store.state.token
+                        }
+                    })
                     .then(function (response) {
-                        console.table(response.data)
-                        
-                    self.patient.name= response.data.name,
-                    self.patient.email= response.data.email,
-                    self.patient.age= response.data.age,
-                    self.patient.passport= response.data.identification,
-                    self.patient.gender= response.data.gender,
-                    self.patient.maritalStatus= response.data.maritalStatus,
-                    self.patient.phoneNumber= response.data.contact,
-                    self.patient.address= response.data.address,
-                    self.patient.county= response.data.county,
-                    self.patient.zipCode= response.data.postal_code
-                    // self.patient.about= response.data.,
-                    // self.patient.image= response.data.
-
+                        self.patient.name = response.data.name,
+                        self.patient.email = response.data.email,
+                        self.patient.age = response.data.age,
+                        self.patient.passport = response.data.identification,
+                        self.patient.maritalStatus = response.data.marital_status,
+                        self.patient.phoneNumber = response.data.contact,
+                        self.patient.address = response.data.address,
+                        self.patient.county = response.data.county,
+                        self.patient.zipCode = response.data.postal_code,
+                        self.patient.about = response.data.diagnosis.doctors_comment,
+                        self.patient.confidence = response.data.diagnosis.confidence_factor,
+                        self.patient.prediction = response.data.diagnosis.model_diagnosis
+                        self.patient.verdict = response.data.diagnosis.is_true
+                        self.patient.image = response.data.diagnosis.image
+                        if(self.patient.gender == "M"){
+                            response.data.gender = "Male"
+                        }
+                        else{
+                            response.data.gender = "Female"
+                        }
                     })
                     .catch(function (error) {
                         // handle error
@@ -177,7 +193,7 @@
             }
         },
         mounted() {
-            this.getPatientDetails(1)
+            this.getPatientDetails(3)
         }
     };
 </script>
